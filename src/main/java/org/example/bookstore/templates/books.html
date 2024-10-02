@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список книг</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Список книг</h1>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="register.html">Регистрация</a>
+        <a href="login.html">Вход</a>
+    </nav>
+</header>
+<main>
+    <div id="book-list"></div>
+</main>
+
+<script>
+    fetch('/api/books')
+        .then(response => response.json())
+        .then(data => {
+            const bookList = document.getElementById('book-list');
+            data.forEach(book => {
+                const bookItem = document.createElement('div');
+                bookItem.className = 'book-item';
+                bookItem.innerHTML = `<h2>${book.title}</h2><p>${book.author}</p><p>Цена: $${book.price}</p><p>Доступно: ${book.quantity}</p>`;
+                bookList.appendChild(bookItem);
+            });
+        });
+</script>
+</body>
+</html>

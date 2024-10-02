@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Вход</h1>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="register.html">Регистрация</a>
+    </nav>
+</header>
+<main>
+    <form id="login-form">
+        <input type="text" id="username" placeholder="Имя пользователя" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
+</main>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('/api/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        }).then(response => {
+            if (response.ok) {
+                alert('Вход успешен!');
+                window.location.href = 'index.html';
+            } else {
+                alert('Ошибка при входе.');
+            }
+        });
+    });
+</script>
+</body>
+</html>
